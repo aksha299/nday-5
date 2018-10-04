@@ -1,0 +1,63 @@
+#include<stdio.h>
+
+struct fract
+{
+	int num;
+	int den;
+};
+
+int read( struct fract arr[])
+{   int n;
+	printf("\nEnter the number of fractions:");
+	scanf("%d",&n);
+
+	for(int k=0;k<n;k++)
+	{
+    	scanf("%d/%d",&arr[k].num,&arr[k].den);
+	}
+    return n;
+}
+
+struct fract compute(struct fract arr[],int n)
+{
+    struct fract f;
+    f.den=1;
+    f.num=0;
+    int gcd;
+    for(int k=0;k<n;k++)
+    {
+        f.den=f.den*(arr[k].den);
+    }
+    for(int k=0;k<n;k++)
+    {
+        f.num=f.num+arr[k].num*(f.den/arr[k].den);
+    }
+    for(int k=1;k<=f.den&&k<=f.num;++k)
+    {
+        if(f.den%k==0 && f.num%k==0)
+            gcd=k;
+    }
+    f.den=f.den/gcd;
+    f.num=f.num/gcd;
+    return f;
+}
+
+void display(struct fract f)
+{
+    printf("SUM OF ENTERED FRACTIONS= %d/%d",f.num,f.den);
+}
+
+int main()
+{
+    struct  fract arr[20];
+    struct fract f;
+    int n;
+    n=read(arr);
+    f=compute(arr,n);
+    display(f);
+    return 0;
+}
+
+
+
+
